@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import {
   BellDot,
   Bot,
+  ChevronDown,
   ChartNoAxesCombined,
   FileWarning,
   Globe,
@@ -31,47 +32,93 @@ const modules = [
 ]
 
 export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const [desktopCollapsed, setDesktopCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
 
   return (
-    <motion.aside
-      animate={{ width: collapsed ? 86 : 290 }}
-      transition={{ type: 'spring', stiffness: 220, damping: 26 }}
-      className="glass relative z-20 hidden rounded-2xl p-3 lg:block"
-    >
-      <button
-        onClick={() => setCollapsed((v) => !v)}
-        className="mb-4 w-full rounded-xl border border-slate-700/60 bg-slate-900/70 px-3 py-2 text-left text-xs text-slate-300"
+    <>
+      <div className="glass relative z-20 rounded-2xl p-3 lg:hidden">
+        <button
+          onClick={() => setMobileOpen((value) => !value)}
+          className="flex w-full items-center justify-between rounded-xl border border-slate-700/60 bg-slate-900/70 px-3 py-2 text-left text-sm text-slate-200"
+        >
+          <span>{mobileOpen ? 'Collapse Menu' : 'Expand Menu'}</span>
+          <ChevronDown
+            size={18}
+            className={`transition-transform duration-200 ${mobileOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
+
+        <motion.nav
+          initial={false}
+          animate={{
+            height: mobileOpen ? 'auto' : 0,
+            opacity: mobileOpen ? 1 : 0,
+          }}
+          transition={{ duration: 0.24, ease: 'easeInOut' }}
+          className="origin-top overflow-hidden"
+        >
+          <div className="space-y-2 pt-3">
+            {modules.map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition ${
+                    isActive
+                      ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue shadow-glow'
+                      : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-neon-purple/50 hover:text-neon-purple'
+                  }`}
+                >
+                  <Icon size={18} />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              )
+            })}
+          </div>
+        </motion.nav>
+      </div>
+
+      <motion.aside
+        animate={{ width: desktopCollapsed ? 86 : 290 }}
+        transition={{ type: 'spring', stiffness: 220, damping: 26 }}
+        className="glass relative z-20 hidden rounded-2xl p-3 lg:block"
       >
-        {collapsed ? 'Expand' : 'Collapse'}
-      </button>
+        <button
+          onClick={() => setDesktopCollapsed((value) => !value)}
+          className="mb-4 w-full rounded-xl border border-slate-700/60 bg-slate-900/70 px-3 py-2 text-left text-xs text-slate-300"
+        >
+          {desktopCollapsed ? 'Expand' : 'Collapse'}
+        </button>
 
-      <nav className="space-y-2">
-        {modules.map((item) => {
-          const Icon = item.icon
-          const isActive = pathname === item.href
+        <nav className="space-y-2">
+          {modules.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
 
-          return (
-            <motion.div
-              key={item.label}
-              whileHover={{ scale: 1.02, x: 2 }}
-            >
-              <Link
-                href={item.href}
-                className={`group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition ${
-                  isActive
-                  ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue shadow-glow'
-                  : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-neon-purple/50 hover:text-neon-purple'
-                }`}
-              >
-                <Icon size={18} />
-                {!collapsed && <span className="truncate">{item.label}</span>}
-              </Link>
-            </motion.div>
-          )
-        })}
-      </nav>
-    </motion.aside>
+            return (
+              <motion.div key={item.label} whileHover={{ scale: 1.02, x: 2 }}>
+                <Link
+                  href={item.href}
+                  className={`group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition ${
+                    isActive
+                      ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue shadow-glow'
+                      : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-neon-purple/50 hover:text-neon-purple'
+                  }`}
+                >
+                  <Icon size={18} />
+                  {!desktopCollapsed && <span className="truncate">{item.label}</span>}
+                </Link>
+              </motion.div>
+            )
+          })}
+        </nav>
+      </motion.aside>
+    </>
   )
 }
