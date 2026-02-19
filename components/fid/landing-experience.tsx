@@ -97,6 +97,26 @@ export function LandingExperience() {
         </Link>
       </div>
 
+      <div className="fixed inset-x-4 top-4 z-30 flex items-center justify-between gap-2 rounded-xl border border-white/15 bg-black/70 p-2 backdrop-blur lg:hidden">
+        <Link href="/" className="rounded-lg px-3 py-2 text-xs text-fid-ash hover:text-white">
+          Home
+        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/login"
+            className="rounded-lg border border-white/20 px-3 py-2 text-xs text-fid-ash transition hover:border-fid-red/60 hover:text-white"
+          >
+            Login
+          </Link>
+          <Link
+            href="/dashboard"
+            className="rounded-lg border border-fid-red/50 bg-fid-red/20 px-3 py-2 text-xs text-white transition hover:bg-fid-red/30"
+          >
+            Dashboard
+          </Link>
+        </div>
+      </div>
+
       <section className="section-block relative flex items-center">
         <div className="mx-auto w-full max-w-7xl">
           <motion.p
