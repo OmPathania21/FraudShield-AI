@@ -10,12 +10,26 @@ import { Button } from '@/components/ui/button'
 import { CyberBackground } from '@/components/fid/cyber-background'
 
 const modules = [
-  'AI Email Detection',
-  'Website Spoofing Defense',
-  'Attachment Scanner',
-  'Credential Exposure Monitor',
-  'Deepfake Voice Analyzer',
-  'AI Model Sandbox',
+  { label: 'AI Email Detection', href: '/email-scanner' },
+  { label: 'Website Spoofing Defense', href: '/website-scanner' },
+  { label: 'Attachment Scanner', href: '/attachment-analyzer' },
+  { label: 'Credential Exposure Monitor', href: '/credential-exposure' },
+  { label: 'Deepfake Voice Analyzer', href: '/deepfake-voice-analyzer' },
+  { label: 'AI Model Sandbox', href: '/ai-model-sandbox' },
+]
+
+const quickLinks = [
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Login', href: '/login' },
+  { label: 'Email Scanner', href: '/email-scanner' },
+  { label: 'Website Scanner', href: '/website-scanner' },
+  { label: 'Attachment Analyzer', href: '/attachment-analyzer' },
+  { label: 'Credential Exposure', href: '/credential-exposure' },
+  { label: 'Deepfake Voice Analyzer', href: '/deepfake-voice-analyzer' },
+  { label: 'AI Model Sandbox', href: '/ai-model-sandbox' },
+  { label: 'Cookie & Browser Risk', href: '/cookie-browser-risk' },
+  { label: 'Reports & Logs', href: '/reports-logs' },
+  { label: 'Feedback & Model Training', href: '/feedback-model-training' },
 ]
 
 export function LandingExperience() {
@@ -70,6 +84,38 @@ export function LandingExperience() {
     <div ref={rootRef} className="relative bg-fid-black text-fid-white">
       <CyberBackground />
       <div className="pointer-events-none absolute inset-0 fid-grid grid-drift opacity-35" />
+
+      <div className="fixed right-4 top-4 z-30 hidden items-center gap-2 rounded-xl border border-white/15 bg-black/60 p-2 backdrop-blur lg:flex">
+        <Link href="/" className="rounded-lg px-3 py-1 text-xs text-fid-ash hover:text-white">
+          Home
+        </Link>
+        <Link href="/login" className="rounded-lg px-3 py-1 text-xs text-fid-ash hover:text-white">
+          Login
+        </Link>
+        <Link href="/dashboard" className="rounded-lg px-3 py-1 text-xs text-fid-ash hover:text-white">
+          Dashboard
+        </Link>
+      </div>
+
+      <div className="fixed inset-x-4 top-4 z-30 flex items-center justify-between gap-2 rounded-xl border border-white/15 bg-black/70 p-2 backdrop-blur lg:hidden">
+        <Link href="/" className="rounded-lg px-3 py-2 text-xs text-fid-ash hover:text-white">
+          Home
+        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/login"
+            className="rounded-lg border border-white/20 px-3 py-2 text-xs text-fid-ash transition hover:border-fid-red/60 hover:text-white"
+          >
+            Login
+          </Link>
+          <Link
+            href="/dashboard"
+            className="rounded-lg border border-fid-red/50 bg-fid-red/20 px-3 py-2 text-xs text-white transition hover:bg-fid-red/30"
+          >
+            Dashboard
+          </Link>
+        </div>
+      </div>
 
       <section className="section-block relative flex items-center">
         <div className="mx-auto w-full max-w-7xl">
@@ -145,13 +191,16 @@ export function LandingExperience() {
           <div className="mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6">
             {modules.map((item) => (
               <motion.article
-                key={item}
+                key={item.label}
                 whileHover={{ y: -5 }}
                 className="glass min-h-[320px] min-w-[320px] snap-start rounded-3xl p-8 md:min-w-[420px]"
               >
                 <p className="text-xs uppercase tracking-cinematic text-fid-ash">Module</p>
-                <h3 className="mt-6 text-3xl font-semibold leading-tight">{item}</h3>
+                <h3 className="mt-6 text-3xl font-semibold leading-tight">{item.label}</h3>
                 <div className="mt-10 h-28 rounded-2xl border border-fid-red/40 bg-gradient-to-r from-fid-red/20 to-transparent" />
+                <Link href={item.href} className="mt-8 inline-block text-sm text-fid-red hover:text-white">
+                  Open Module →
+                </Link>
               </motion.article>
             ))}
           </div>
@@ -164,6 +213,18 @@ export function LandingExperience() {
           <Button asChild size="lg" className="mt-10 h-14 px-10 text-base uppercase tracking-cinematic">
             <Link href="/login">Authenticate Access</Link>
           </Button>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-2">
+            {quickLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs text-fid-ash transition hover:border-fid-red/60 hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </div>
