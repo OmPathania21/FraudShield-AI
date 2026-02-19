@@ -14,49 +14,65 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.12), transparent 40%),
-    radial-gradient(circle at 80% 0%, rgba(167, 139, 250, 0.12), transparent 45%),
-    #050814;
-  color: #e2e8f0;
+  background: #000;
+  color: #f5f5f5;
+  overflow-x: hidden;
 }
 
-.cyber-grid {
-  background-image: linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
-  background-size: 38px 38px;
+.fid-grid {
+  background-image: linear-gradient(rgba(220, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
 }
 
 .glass {
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.62), rgba(15, 23, 42, 0.3));
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  backdrop-filter: blur(14px);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
 }
 
-.risk-pulse {
-  animation: riskPulse 2.2s ease-in-out infinite;
+.red-pulse {
+  animation: redPulse 2.4s ease-in-out infinite;
 }
 
-@keyframes riskPulse {
+@keyframes redPulse {
   0% {
-    box-shadow: 0 0 0 rgba(251, 113, 133, 0.1);
+    box-shadow: 0 0 0 rgba(220, 0, 0, 0.1);
   }
   50% {
-    box-shadow: 0 0 28px rgba(251, 113, 133, 0.45);
+    box-shadow: 0 0 40px rgba(220, 0, 0, 0.52);
   }
   100% {
-    box-shadow: 0 0 0 rgba(251, 113, 133, 0.1);
+    box-shadow: 0 0 0 rgba(220, 0, 0, 0.1);
   }
 }
 
 @keyframes gridDrift {
   from {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateY(38px);
+    transform: translate3d(0, 42px, 0);
   }
 }
 
 .grid-drift {
-  animation: gridDrift 9s linear infinite;
+  animation: gridDrift 12s linear infinite;
+}
+
+.cinematic-heading {
+  letter-spacing: 0.08em;
+  line-height: 0.92;
+}
+
+.section-block {
+  min-height: 100vh;
+  padding: 8rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .section-block {
+    padding: 8rem 4rem;
+  }
 }
