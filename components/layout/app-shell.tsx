@@ -22,7 +22,7 @@ export function AppShell({ title, subtitle, badges = [], children }: AppShellPro
       <MovingGrid />
       <ParticleField />
 
-      <div className="relative z-10 grid grid-cols-1 gap-4 lg:grid-cols-[auto_1fr]">
+      <div className="relative z-10 space-y-4">
         <Sidebar />
 
         <motion.section
