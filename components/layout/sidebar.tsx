@@ -17,9 +17,10 @@ import {
   ShieldAlert,
 } from 'lucide-react'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const modules = [
-  { label: 'Dashboard', icon: LayoutDashboard, href: '/' },
+  { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
   { label: 'Email Scanner', icon: MailWarning, href: '/email-scanner' },
   { label: 'Website Scanner', icon: Globe, href: '/website-scanner' },
   { label: 'Attachment Analyzer', icon: FileWarning, href: '/attachment-analyzer' },
@@ -32,12 +33,13 @@ const modules = [
 ]
 
 export function Sidebar() {
+  const [desktopCollapsed, setDesktopCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
 
   return (
-    <div className="glass relative z-20 rounded-2xl p-3">
-      <div className="lg:hidden">
+    <>
+      <div className="glass relative z-20 rounded-2xl p-3 lg:hidden">
         <button
           onClick={() => setMobileOpen((value) => !value)}
           className="flex w-full items-center justify-between rounded-xl border border-slate-700/60 bg-slate-900/70 px-3 py-2 text-left text-sm text-slate-200"
@@ -68,11 +70,12 @@ export function Sidebar() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition ${
+                  className={cn(
+                    'group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition',
                     isActive
-                      ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue shadow-glow'
-                      : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-neon-purple/50 hover:text-neon-purple'
-                  }`}
+                      ? 'border-fid-red/50 bg-fid-red/10 text-white shadow-glow'
+                      : 'border-white/15 bg-black/60 text-fid-ash hover:border-fid-red/60 hover:text-white'
+                  )}
                 >
                   <Icon size={18} />
                   <span className="truncate">{item.label}</span>
@@ -83,28 +86,42 @@ export function Sidebar() {
         </motion.nav>
       </div>
 
-      <nav className="hidden lg:flex lg:flex-wrap lg:items-center lg:gap-2">
-        {modules.map((item) => {
-          const Icon = item.icon
-          const isActive = pathname === item.href
+      <motion.aside
+        animate={{ width: desktopCollapsed ? 84 : 290 }}
+        transition={{ type: 'spring', stiffness: 210, damping: 25 }}
+        className="glass relative z-20 hidden min-h-[calc(100vh-3rem)] rounded-2xl p-3 lg:block"
+      >
+        <button
+          onClick={() => setDesktopCollapsed((value) => !value)}
+          className="mb-4 w-full rounded-xl border border-white/15 bg-black/70 px-3 py-2 text-left text-xs uppercase tracking-cinematic text-fid-ash"
+        >
+          {desktopCollapsed ? 'Expand' : 'Collapse'}
+        </button>
 
-          return (
-            <motion.div key={item.label} whileHover={{ scale: 1.02, y: -1 }}>
-              <Link
-                href={item.href}
-                className={`group inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm transition ${
-                  isActive
-                    ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue shadow-glow'
-                    : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-neon-purple/50 hover:text-neon-purple'
-                }`}
-              >
-                <Icon size={16} />
-                <span className="truncate">{item.label}</span>
-              </Link>
-            </motion.div>
-          )
-        })}
-      </nav>
-    </div>
+        <nav className="space-y-2">
+          {modules.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+
+            return (
+              <motion.div key={item.label} whileHover={{ scale: 1.02, x: 2 }}>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    'group flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-sm transition',
+                    isActive
+                      ? 'border-fid-red/50 bg-fid-red/10 text-white shadow-glow'
+                      : 'border-white/15 bg-black/60 text-fid-ash hover:border-fid-red/60 hover:text-white'
+                  )}
+                >
+                  <Icon size={18} />
+                  {!desktopCollapsed && <span className="truncate">{item.label}</span>}
+                </Link>
+              </motion.div>
+            )
+          })}
+        </nav>
+      </motion.aside>
+    </>
   )
 }

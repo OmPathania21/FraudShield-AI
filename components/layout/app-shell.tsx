@@ -22,7 +22,7 @@ export function AppShell({ title, subtitle, badges = [], children }: AppShellPro
       <MovingGrid />
       <ParticleField />
 
-      <div className="relative z-10 space-y-4">
+      <div className="relative z-10 grid grid-cols-1 gap-4 lg:grid-cols-[auto_1fr]">
         <Sidebar />
 
         <motion.section
@@ -32,16 +32,16 @@ export function AppShell({ title, subtitle, badges = [], children }: AppShellPro
           className="space-y-4"
         >
           <header className="glass rounded-2xl p-5">
-            <p className="text-xs uppercase tracking-[0.22em] text-slate-400">Fraud Intelligence Dashboard</p>
+            <p className="text-xs uppercase tracking-cinematic text-fid-ash">FID Command Center</p>
             <h1 className="mt-2 text-2xl font-semibold text-white lg:text-3xl">{title}</h1>
-            <p className="mt-2 text-sm text-slate-300">{subtitle}</p>
+            <p className="mt-2 text-sm text-fid-ash">{subtitle}</p>
 
             {badges.length > 0 && (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
                 {badges.map((badge) => (
                   <span
                     key={badge}
-                    className="rounded-full border border-neon-blue/40 bg-neon-blue/10 px-3 py-1 text-neon-blue"
+                    className="rounded-full border border-fid-red/50 bg-fid-red/15 px-3 py-1 text-white"
                   >
                     {badge}
                   </span>
